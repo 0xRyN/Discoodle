@@ -1,0 +1,457 @@
+@import url('https://fonts.googleapis.com/css2?family=Goblin+One&family=Mukta:wght@300&family=Rubik&display=swap');
+html { overflow-y: hidden; } 
+::-webkit-scrollbar {
+  display: none;
+  }
+
+
+.discord-mockup {
+  background: #36393e;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  height: 100vh;
+  border-radius: 5px;
+  overflow-x: hidden;
+}
+
+body{
+  font-family: 'Rubik', sans-serif;
+}
+
+.iteminf {
+  color: white;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+  
+  
+}
+
+.circle-logo {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circle-logo:hover{
+  width: 55px;
+  height: 55px;
+}
+
+.circle-logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.buttonmute{
+  color : white;
+  background-color: #202225;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+  font-size: 200%;
+  margin-left: 40%;
+}
+
+.discord-mockup .sidebar-panel .user-bas{
+  background-color: #202225;
+  height: 55px;
+  width: 240px;
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+}
+
+.discord-mockup .sidebar-panel .user-bas #name-user-bas{
+  font-size: 22px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 5px;
+  margin-top: 15px;
+  color: white;
+}
+
+.discord-mockup .sidebar-panel .user-bas .circle-logo{
+  margin-left: 5px;
+  margin-top: 5px;
+  width: 42px;
+  height: 42px;  
+}
+
+
+
+
+@media only screen and (max-width : 600px) {
+  .discord-mockup {
+    flex-direction: column;
+  }
+  .discord-mockup .items-panel {
+    width: 100% !important;
+    height: 80px !important;
+  }
+  .discord-mockup .items-panel .actions {
+    display: none !important;
+  }
+  .discord-mockup .items-panel .items {
+    flex-direction: row !important;
+  }
+  .discord-mockup .items-panel .items .item {
+    margin: auto 10px 0 0 !important;
+  }
+  .discord-mockup .sidebar-panel {
+    width: 100% !important;
+    height: 120px !important;
+  }
+  .discord-mockup .sidebar-panel .header {
+    display: none !important;
+  }
+  .discord-mockup .sidebar-panel .items {
+    margin-top: 0 !important;
+  }
+}
+
+
+.row-full {
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  left: 50%;
+}
+
+.discord-mockup .section-header, .discord-mockup .messages-panel .messages-group .header, .discord-mockup .sidebar-panel .header {
+  position: absolute;
+  z-index: 1;
+  height: 56px;
+  line-height: 56px;
+  vertical-align: middle;
+  color: white;
+  padding-left: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+.discord-mockup .items-panel {
+  background: #1e2124;
+  height: inherit;
+  width: 80px;
+  padding: 15px;
+}
+.discord-mockup .items-panel .actions {
+  height: 20px;
+  display: flex;
+  margin-bottom: 10px;
+}
+.discord-mockup .items-panel .actions .action-item, .discord-mockup .items-panel .actions .zoom, .discord-mockup .items-panel .actions .minimize, .discord-mockup .items-panel .actions .close {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  margin: auto;
+}
+.discord-mockup .items-panel .actions .action-item:hover, .discord-mockup .items-panel .actions .zoom:hover, .discord-mockup .items-panel .actions .minimize:hover, .discord-mockup .items-panel .actions .close:hover {
+  filter: brightness(2);
+}
+.discord-mockup .items-panel .actions .close {
+  background: #ff6052;
+}
+.discord-mockup .items-panel .actions .minimize {
+  background: #ffbe06;
+}
+.discord-mockup .items-panel .actions .zoom {
+  background: #16cc37;
+}
+.discord-mockup .items-panel .items {
+  display: flex;
+  flex-direction: column;
+}
+.discord-mockup .items-panel .items .item {
+  margin: 0 auto 10px;
+  color: white;
+  height: 50px;
+  width: 50px;
+  
+}
+.discord-mockup .items-panel .items .item  img {
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.discord-mockup .items-panel .items .item img:hover {
+  border-radius: 30%;
+}
+.discord-mockup .items-panel .items .item .guild-add {
+  transition: all 0.3s ease;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: transparent;
+  color: #535559;
+  border: 1px dashed #535559;
+  padding: 0;
+  font-size: 32px;
+  font-weight: 200;
+  text-align: center;
+  line-height: 50px;
+  margin-top: 20px;
+}
+.discord-mockup .items-panel .items .item .guild-add:hover {
+  border: 1px dashed white;
+  color: white;
+  border-radius: 30%;
+}
+.discord-mockup .sidebar-panel {
+  background: #2e3136;
+  height: inherit;
+  overflow-y: auto;
+  width: 240px;
+  flex-shrink: 1;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+@media only screen and (max-width : 992px) {
+  .discord-mockup .sidebar-panel {
+    width: 170px;
+  }
+}
+.discord-mockup .sidebar-panel .header {
+  background: #2e3136;
+  width: 240px;
+  border-bottom: solid 1px #23252a;
+}
+.discord-mockup .sidebar-panel::-webkit-scrollbar {
+  display: none;
+}
+.discord-mockup .sidebar-panel .items {
+  margin-top: 56px;
+}
+.discord-mockup .sidebar-panel .items .item {
+  height: 36px;
+  line-height: 36px;
+  vertical-align: middle;
+  padding-left: 20px;
+  opacity: 0.3;
+  color: white;
+}
+
+.discord-mockup .sidebar-panel .items .item::before {
+  content: "#";
+  color: #8a8e94 !important;
+  margin-right: 3px;
+  font-weight: normal;
+}
+.discord-mockup .sidebar-panel .items .item:hover {
+  opacity: 1;
+  background: linear-gradient(to right, #282b30 85%, #2e3136);
+}
+.discord-mockup .messages-panel {
+  height: inherit;
+  overflow-y: auto;
+  flex: 1;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.discord-mockup .messages-panel::-webkit-scrollbar {
+  display: none;
+}
+.discord-mockup .messages-panel .messages-group {
+  display: none;
+}
+.discord-mockup .messages-panel .messages-group.show {
+  display: block;
+}
+.discord-mockup .messages-panel .messages-group .header {
+  background: #36393e;
+  border-bottom: solid 1px #303337;
+  width: 100%;
+  position: absolute;
+}
+.discord-mockup .messages-panel .messages-group .header::before {
+  content: "#";
+  color: #8a8e94 !important;
+  margin-right: 3px;
+  font-weight: normal;
+}
+.discord-mockup .messages-panel .messages-group .messages {
+  padding: 56px 20px 0;
+}
+.discord-mockup .messages-panel .messages-group .messages .message {
+  width: 100%;
+  border-bottom: solid 1px #4d5259;
+  position: relative;
+  padding: 15px 0 15px;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .icon {
+  float: left;
+  height: 40px;
+  width: 40px;
+  margin-right: 20px;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .icon img {
+  border-radius: 50%;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body {
+  margin-left: 60px;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .user-name {
+  color: white;
+  font-weight: bold;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .hour {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body p, .discord-mockup .messages-panel .messages-group .messages .message .body .content {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  margin: 0;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .embed-wrapper {
+  margin-top: 5px;
+  display: flex;
+  line-height: 1.1em;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .embed-wrapper .content-inner {
+  background-color: rgba(46, 48, 54, 0.3);
+  border: solid 1px rgba(46, 48, 54, 0.6);
+  border-radius: 0 3px 3px 0;
+  padding: 8px 10px;
+  display: flex;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .embed-wrapper .content-inner .content {
+  word-wrap: break-word;
+  flex: 1;
+  max-width: 300px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .embed-wrapper .content-inner .content .title {
+  color: white;
+  font-weight: bold;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .embed-wrapper .content-inner .thumb {
+  float: right;
+  max-height: 80px;
+  max-width: 80px;
+  width: auto;
+  border-radius: 3px;
+  object-fit: contain;
+  margin-left: 20px;
+}
+.discord-mockup .messages-panel .messages-group .messages .message .body .embed-wrapper .color-pill {
+  float: left;
+  background-color: #0050af;
+  border-radius: 3px 0 0 3px;
+  width: 4px;
+  flex-shrink: 0;
+}
+
+.discord-mockup .messages-panel .msg-form{
+  height: 20px;
+  width: 100%;
+}
+
+.discord-mockup .messages-panel .msg-input{
+  height: auto;
+  width: 100%;
+  position: fixed;
+  top: 85%;
+}
+
+.discord-mockup .messages-panel .test{
+  height: 850px;
+  overflow-y: scroll;
+}
+
+
+.discord-mockup .messages-panel .msg-form .msg-input{
+  position:absolute;
+  background-color: #40444b;
+  left: 20px;
+  width: 65%;
+  height: 100%;
+  border: none;
+  color: white;
+  padding: 0px 75px; 
+  border-radius: 10px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.discord-mockup .messages-panel .msg-form .msg-button{
+  visibility: hidden;
+  background-color: #242424;
+  color:white;
+  width: 10%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+
+}
+
+input[type="file"] {
+  display: none;
+}
+
+
+
+.custom-file-upload {
+  position: relative;
+  z-index: 3;
+  color:black;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 35px;
+  bottom: -55px;
+}
+.custom-text-g{
+  position: absolute;
+  z-index: 4;
+  color:black;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 1430px;
+  font-weight: bold;
+  bottom: -55px;
+}
+.custom-text-p{
+  position: absolute;
+  z-index: 4;
+  color:black;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 1475px;
+  font-weight: bold;
+  bottom: -55px;
+}
+
+.discord-mockup .sidebar-panel .user-section{
+  position: fixed;
+  height: 64px;
+  top: 0;
+  bottom: 0;
+  background-color: #242424;
+
+}
+
+.msg-input a{
+  margin-left: 25px;
+  font-size: 25px;
+}

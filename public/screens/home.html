@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Discoodog</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../styles/tabs.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='../scripts/script.js'></script>
+    
+</head>
+<body>
+    <div class="row">
+      <div class="col s12 m3 l3">
+        <div class="sidenav">
+            <h3>Discoodog</h3><hr/>
+          
+            <div class="subnav">
+              <ul id="listtab">
+                <li><a href="/home.html"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a></li>
+                <li><a class="active" href="/profile.html"><i class="fa fa-address-card" aria-hidden="true"></i> Profil</a></li>
+                <li><a href="index.html"><i class="fa fa-paper-plane" aria-hidden="true"></i> Messages</a></li>
+                <script>
+                    var socket = io();
+                      socket.emit('sql-select', "SELECT * FROM `users` WHERE id_user = "+getCookie("uid"), (result) =>{
+                      if(result[0].usertype==2){
+                        var idtoload = document.getElementById("listtab");
+                        idtoload.insertAdjacentHTML('beforeend', '<li><a href="adminpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Admin</a></li>');
+                      
+                      }
+                      else if(result[0].usertype==1){
+                        var idtoload = document.getElementById("listtab");
+                        idtoload.insertAdjacentHTML('beforeend', '<li><a href="profpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Professeur</a></li>');
+                      }
+                      else if(result[0].usertype==0){
+                        var idtoload = document.getElementById("listtab");
+                        idtoload.insertAdjacentHTML('beforeend', '<li><a href="userpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Changer de Classe</a></li>');
+                      }
+                      })
+                </script>
+                <li><a href="writeArticle.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Écrire un article</a></li>
+              </ul>
+            </div>
+            
+        </div> 
+      </div>
+        <div class="col s12 m8 l9">
+            <div id="container_logo">
+                <img src="../img/logo-large.png" alt="Logo" />
+            </div>
+        <div>
+   
+       <div class="col s12 m8 l9" id="main">
+          <h2 id="center">Actualités</h2><hr/>
+            <div class="col s10 m6" id = "news">
+            </div>
+            <!-- Partie Droite -->
+            <div class="col s10 m6" id = "important">
+            </div>
+        </div>
+    </div>
+    
+   
+            
+</body>
+   
+            
+</body>
+
+</html>
+<script>
+  socket.on("logged", username => {
+    console.log("Hey");
+    sessionStorage.setItem("username", username);
+  });
+  sessionStorage.setItem('clé', true);
+  var data = sessionStorage.getItem('clé');
+  $(function (){
+    var socket = io();
+    socket.emit('sql-select', 'SELECT * FROM articles', (results) => {
+      articles = results;
+      for(i = 0; i<articles.length;i++){
+        if(articles[i].type == 1){
+          var node = document.getElementById('important');
+          node.insertAdjacentHTML('beforeend', '<div class="card-panel grey lighten-5 z-depth-1"> <div class="row"> <div class="col s2">  </div> <span id="card-notif" class="card-title">Par : '+articles[i].auteur+'</span><hr/> <div class="col s10"> <span class="black-text"> '+articles[i].contenu+'<p>le '+articles[i].date+' </p></span> </div> </div> </div>');
+        }
+        else{
+          var node = document.getElementById('news');
+          node.insertAdjacentHTML('beforeend','<div class="card grey lighten-5 z-depth-1"> <div class="card-content black-text"> <span class="card-title" id="card-ano">INFORMATIONS:</span><span class="card-title" id="card-sub">'+articles[i].nom+'</span><hr/> <p>'+articles[i].contenu+'</p><br><p>Auteur : '+articles[i].auteur+' le '+articles[i].date+' </div> </div> </div>');
+        }
+      }
+    });
+    $(".tab").click(function(){
+      localStorage.setItem("nom", $(this).attr('id'));
+      console.log(localStorage.getItem('nom'));
+    });
+  })
+</script>

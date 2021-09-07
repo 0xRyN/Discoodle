@@ -1,0 +1,63 @@
+body{
+    background-color: #2c2f33;
+       font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+}
+.login-form{
+    height: auto;
+    background-color: #1e2124;
+      top: 50%;
+      left: 50%;
+    
+}
+
+.center-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+}
+.login-form h1{
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+    text-align: center;
+}
+
+#action{
+    text-align: center;
+    font-size: 32px;
+    color: whitesmoke;
+}
+
+.input-field input[type=date]:focus + label,
+.input-field input[type=text]:focus + label,
+.input-field input[type=email]:focus + label,
+.input-field input[type=password]:focus + label {
+      color: #2c2f33;
+}
+
+.input-field input[type=date]:focus,
+.input-field input[type=text]:focus,
+.input-field input[type=email]:focus,
+.input-field input[type=password]:focus {
+     border-bottom: 2px solid #2c2f33;
+      box-shadow: none;
+}
+
+#container_logo{
+    display: flex;
+    justify-content: center;
+    margin-right: 100px;
+ }
+ 
+ #container_logo img {
+    vertical-align: middle;
+ }
+ 
+ #center{
+    text-align: center;
+}
+

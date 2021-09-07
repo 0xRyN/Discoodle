@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Ecrire un Article</title>
+        <link rel="stylesheet" href="../styles/groups.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+        />
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="../scripts/script.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="../styles/main.css"
+        />
+        <link rel="stylesheet" href="../styles/article.css" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <script src="../scripts/main.js"></script>
+        <script src="../scripts/script.js"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col s12 m3 l3">
+                <div class="sidenav">
+                    <h3>Discoodog</h3>
+                    <hr />
+
+                    <div class="subnav">
+                        <ul id="listtab">
+                            <li>
+                                <a href="/home.html"
+                                    ><i
+                                        class="fa fa-home"
+                                        aria-hidden="true"
+                                    ></i>
+                                    Accueil</a
+                                >
+                            </li>
+                            <li>
+                                <a class="active" href="/profile.html"
+                                    ><i
+                                        class="fa fa-address-card"
+                                        aria-hidden="true"
+                                    ></i>
+                                    Profil</a
+                                >
+                            </li>
+                            <li>
+                                <a href="index.html"
+                                    ><i
+                                        class="fa fa-paper-plane"
+                                        aria-hidden="true"
+                                    ></i>
+                                    Messages</a
+                                >
+                            </li>
+                            <script>
+                                var socket = io();
+                                socket.emit(
+                                    "sql-select",
+                                    "SELECT * FROM `users` WHERE id_user = " +
+                                        getCookie("uid"),
+                                    (result) => {
+                                        if (result[0].usertype == 2) {
+                                            var idtoload =
+                                                document.getElementById(
+                                                    "listtab"
+                                                );
+                                            idtoload.insertAdjacentHTML(
+                                                "beforeend",
+                                                '<li><a href="adminpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Admin</a></li>'
+                                            );
+                                        } else if (result[0].usertype == 1) {
+                                            var idtoload =
+                                                document.getElementById(
+                                                    "listtab"
+                                                );
+                                            idtoload.insertAdjacentHTML(
+                                                "beforeend",
+                                                '<li><a href="profpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Professeur</a></li>'
+                                            );
+                                        } else if (result[0].usertype == 0) {
+                                            var idtoload =
+                                                document.getElementById(
+                                                    "listtab"
+                                                );
+                                            idtoload.insertAdjacentHTML(
+                                                "beforeend",
+                                                '<li><a href="userpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Changer de Classe</a></li>'
+                                            );
+                                        }
+                                    }
+                                );
+                            </script>
+                            <li>
+                                <a href="writeArticle.html"
+                                    ><i
+                                        class="fa fa-pencil-square-o"
+                                        aria-hidden="true"
+                                    ></i>
+                                    Écrire un article</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="container_logo">
+            <img src="img/logo-large.png" alt="Logo" />
+        </div>
+
+        <form method="POST" action="">
+            <h1>Ecrire un article</h1>
+            <div class="row">
+                <input type="text" name="text" id="text" style="color: white" />
+                <label for="text">Nom</label>
+            </div>
+            <div class="row">
+                <textarea
+                    name="articletext"
+                    id="articletext"
+                    style="color: white"
+                ></textarea>
+                <label for="articletext">Contenu de votre article</label>
+            </div>
+            <div class="row">
+                <p style="color: white">Type d'article</p>
+                <input
+                    class="with-gap"
+                    type="radio"
+                    name="fradio"
+                    id="fradio1"
+                    value="0"
+                />
+                <label for="fradio1">Radio</label>Article Important <br /><br />
+                <input type="radio" name="fradio" id="fradio2" value="1" />
+                <label for="fradio2">Radio</label> Simple news
+            </div>
+            <button type="submit" tabindex="0">Poster l'article</button>
+        </form>
+    </body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="../scripts/groups.js"></script>
+<script src="../scripts/video.js"></script>
+<script>
+    $(function () {
+        if (!getCookie("uid")) {
+            window.location.href = "/log.html";
+        }
+    });
+</script>

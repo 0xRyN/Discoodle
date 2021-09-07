@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Panel Admin</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="../styles/groups.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+  <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+  <script src='/socket.io/socket.io.js'></script>
+  <script src='../scripts/script.js'></script>
+</head>
+<body>
+  <script>
+    var socket = io();
+    $(function (){
+    if(!getCookie("uid")){
+      window.location.href = "/log.html";
+    }
+  });
+    socket.emit('sql-select', "SELECT * FROM `users` WHERE id_user = "+getCookie("uid"), (result) =>{
+      if(result[0].usertype!=1){
+        window.location.href = "/home.html";
+      }
+    })
+  </script>
+  <div class="row">
+    <div class="col s12 m3 l3">
+      <div class="sidenav">
+          <h3>Discoodog</h3><hr/>
+        
+          <div class="sidenav">
+            <h3>Discoodog</h3><hr/>
+          
+            <div class="subnav">
+              <ul id="listtab">
+                <li><a href="/home.html"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a></li>
+                <li><a class="active" href="/profile.html"><i class="fa fa-address-card" aria-hidden="true"></i> Profil</a></li>
+                <li><a href="index.html"><i class="fa fa-paper-plane" aria-hidden="true"></i> Messages</a></li>
+                <script>
+                    var socket = io();
+                      socket.emit('sql-select', "SELECT * FROM `users` WHERE id_user = "+getCookie("uid"), (result) =>{
+                      if(result[0].usertype==2){
+                        var idtoload = document.getElementById("listtab");
+                        idtoload.insertAdjacentHTML('beforeend', '<li><a href="adminpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Admin</a></li>');
+                      
+                      }
+                      else if(result[0].usertype==1){
+                        var idtoload = document.getElementById("listtab");
+                        idtoload.insertAdjacentHTML('beforeend', '<li><a href="profpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Professeur</a></li>');
+                      }
+                      else if(result[0].usertype==0){
+                        var idtoload = document.getElementById("listtab");
+                        idtoload.insertAdjacentHTML('beforeend', '<li><a href="userpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Changer de Classe</a></li>');
+                      }
+                      })
+                </script>
+                <li><a href="writeArticle.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Écrire un article</a></li>
+              </ul>
+            </div>
+            
+        </div> 
+          
+      </div> 
+    </div>
+      <div class="col s12 m8 l9">
+          <div id="container_logo">
+              <img src="img/logo-large.png" alt="Logo" />
+          </div>
+      <div>
+ 
+     <div class="col s12 m8 l9" id="main">
+        <h2 id="center">Panel Professeur</h2><hr/>
+        <h2 id="center" style="font-size: 200%;">Créer une classe : </h2><hr/>
+        <table class="tabadmin" style="width: 100%;">
+          <tbody id="createclass">
+            <tr>
+              <td style="width: 10%;" class="tdadmin">Nom de la classe à créer</td>
+              <td style="width: 10%;" class="tdadmin"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="center" style="font-size: 200%;">Création de Cours pour vos classes</h2><hr/>
+        <table class="tabadmin" style="width: 100%;">
+          <tbody id="createcours">
+            <tr>
+              <td style="width: 10%;" class="tdadmin">Nom de la classe</td>
+              <td style="width: 10%;" class="tdadmin">Nom du cours que vous souhaitez créer</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="center" style="font-size: 200%;">Gestion de vos cours</h2><hr/>
+        <table class="tabadmin" style="width: 100%;">
+          <tbody id="Liste modules">
+            <tr>
+              <td style="width: 33%;" class="tdadmin">Nom du cours</td>
+              <td style="width: 33%;" class="tdadmin">Classe affectée à ce cours</td>
+              <td style="width: 430px;" class="tdadmin">Nom du module à créer</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="tabadmin" style="width: 100%;">
+          <tbody id="listallusers">
+            <h2 id="center" style="font-size: 200%;">Gestions de vos modules</h2><hr/>
+            <tr>
+              <td style="width: 25%;" class="tdadmin">Nom du Cours</td>
+              <td style="width: 25%;" class="tdadmin">Nom du Module</td>
+              <td style="width: 25%;" class="tdadmin">Classe associée</td>
+              <td style="width: 139px;" class="tdadmin">Action sur le module</td>
+            </tr>
+          </tbody>
+        </table>
+        <script>
+          function reloada(){
+            location.reload();
+          }
+          var classe = document.getElementById("createclass");
+          classe.insertAdjacentHTML('beforeend', '<tr><td style="width: 161px;" class="tdnom" ><input type="text" id="classtocreate" value=""><td> <button id="salut" type="button" style="color: black;background: orange;">Créer la classe</button> </td></tr>');
+          document.getElementById("salut").addEventListener("click", function() {
+              var newcname = document.getElementById("classtocreate").value;
+              if(newcname.length>1){
+                socket.emit('sql-update', 'INSERT INTO `classes` (`libelle_classe`, `id_user`) VALUES (\''+newcname+'\', \''+getCookie("uid")+'\')', (results) => {
+                });
+                classtocreate.value = "";
+                reloada();
+              }
+          });
+          var node = document.getElementById("listallusers");
+          var nodeCreate = document.getElementById("createcours");
+          var nodeModule = document.getElementById("Liste modules");
+          socket.emit('sql-select', 'SELECT * FROM `classes` WHERE `id_user` = '+getCookie("uid")+' ORDER BY `classes`.`id_classe` DESC', (results) => {
+            results.forEach(element => {
+              var Cours = element.id_classe;
+              nodeCreate.insertAdjacentHTML('beforeend', '<tr> <td style="width: 161px;" class="tdnom" >'+element.libelle_classe+'</td>  </td><td style="width: 142px;" class="tdnom"><input type="text" id="'+Cours+'" value=""> <button id="'+Cours+"a"+'" type="button" style="color: black;">Créer un cours</button></td>');
+                var message = document.getElementById(Cours);
+                        document.getElementById(Cours+"a").addEventListener("click", function() {
+                        if(message.value.length>0){
+                        socket.emit('sql-update', 'INSERT INTO `cours`(`libelle_cours`, `id_classe`) VALUES ("'+message.value+'","'+Cours+'")', (results) => {
+                        });
+                        message.value = "";
+                        reloada();
+                        }
+                        });
+                socket.emit('sql-select', 'SELECT * FROM `cours` WHERE `id_classe` = '+element.id_classe+'', (resultat) => {
+                resultat.forEach(element2 => {
+                  var Module = element2.libelle_cours;
+                  nodeModule.insertAdjacentHTML('beforeend', '<tr> <td style="width: 161px;" class="tdnom" >'+element2.libelle_cours+'</td> <td style="width: 161px;" class="tdnom" >'+element.libelle_classe+'</td>  </td><td style="width: 142px;" class="tdnom"><input type="text" id="'+Module+'" value=""> <button id="'+Module+"a"+'" type="button" style="color: black;background: green;">Créer un module</button> <button id="'+Module+"b"+'" type="button" style="color: black;background: firebrick;">Supprimer le cours !</button></td>');
+                  var message2 = document.getElementById(Module);
+                  document.getElementById(Module+"b").addEventListener("click", function() {
+                        socket.emit('sql-update', 'DELETE FROM `modules` WHERE `modules`.`id_cours` = '+element2.id_cours, (results) => {
+                        });
+                        socket.emit('sql-update', 'DELETE FROM `cours` WHERE `cours`.`id_cours` = '+element2.id_cours, (results) => {
+                        });
+                        reloada();
+                        });
+                        document.getElementById(Module+"a").addEventListener("click", function() {
+                        if(message2.value.length>0){
+                        socket.emit('sql-update', 'INSERT INTO `modules`(`libelle_module`, `id_cours`) VALUES ("'+message2.value+'","'+element2.id_cours+'")', (results) => {
+                        });
+                        message2.value = "";
+                        reloada();
+                        }
+                        });
+                  socket.emit('sql-select', 'SELECT * FROM `modules` WHERE `id_cours` = '+element2.id_cours+'', (results2) => {
+                    results2.forEach(element3=>{
+                      var Modle = element3.id_module;
+                      node.insertAdjacentHTML('beforeend', '<tr> <td style="width: 161px;" class="tdnom">'+element2.libelle_cours+'</td> <td style="width: 139px;" class="tdnom">'+element3.libelle_module+'</td> <td style="width: 81px;" class="tdnom">'+element.libelle_classe+' </td><td style="width: 142px;" class="tdnom"> <button id="'+Modle+"a"+'" type="button" style="color: black;background: firebrick;">Supprimer le module</button></td>');
+                        document.getElementById(Modle+"a").addEventListener("click", function() {
+                        socket.emit('sql-update', 'DELETE FROM `modules` WHERE `modules`.`id_module` = '+element3.id_module, (results) => {
+                        });
+                        reloada();
+                        });
+                    });
+                  });
+                });
+              });
+            });
+          })
+        </script>
+      </div>
+  </div>
+  
+ 
+          
+</body>
+</html>

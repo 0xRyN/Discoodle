@@ -1,0 +1,20 @@
+.content-box
+{
+   width:95vw; /* or whatever width you want. */
+   height: 90vh;
+   background-color: #23272A;
+   overflow-y:scroll;
+}
+p
+{
+   color: white;
+   text-decoration: solid;
+   font-size: large;
+}
+input, select, textarea{
+   color: white;
+   background: #99aab5;
+}
+textarea:focus, input:focus {
+   color: white;
+}

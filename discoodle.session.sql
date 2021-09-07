@@ -1,0 +1,3 @@
+-- @BLOCK
+
+SELECT * FROM articles;

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Panel User</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="stylesheet" href="../styles/groups.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+  <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+  <script src='/socket.io/socket.io.js'></script>
+  <script src='../scripts/script.js'></script>
+</head>
+<body>
+  <script>
+    function getCookie(name) {
+    // Split cookie string and get all individual name=value pairs in an array
+    var cookieArr = document.cookie.split(";");
+    
+    // Loop through the array elements
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if(name == cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    
+    // Return null if not found
+    return null;
+    }
+    var socket = io();
+    $(function (){
+    if(!getCookie("uid")){
+      window.location.href = "/log.html";
+    }
+  });
+    socket.emit('sql-select', "SELECT * FROM `users` WHERE id_user = "+getCookie("uid"), (result) =>{
+      if(result[0].usertype!=0){
+        window.location.href = "/home.html";
+      }
+    })
+  </script>
+  <div class="row">
+    <div class="col s12 m3 l3">
+      <div class="sidenav">
+        <h3>Discoodog</h3><hr/>
+      
+        <div class="subnav">
+          <ul id="listtab">
+            <li><a href="/home.html"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a></li>
+            <li><a class="active" href="/profile.html"><i class="fa fa-address-card" aria-hidden="true"></i> Profil</a></li>
+            <li><a href="index.html"><i class="fa fa-paper-plane" aria-hidden="true"></i> Messages</a></li>
+            <script>
+                var socket = io();
+                  socket.emit('sql-select', "SELECT * FROM `users` WHERE id_user = "+getCookie("uid"), (result) =>{
+                  if(result[0].usertype==2){
+                    var idtoload = document.getElementById("listtab");
+                    idtoload.insertAdjacentHTML('beforeend', '<li><a href="adminpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Admin</a></li>');
+                  
+                  }
+                  else if(result[0].usertype==1){
+                    var idtoload = document.getElementById("listtab");
+                    idtoload.insertAdjacentHTML('beforeend', '<li><a href="profpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Panel Professeur</a></li>');
+                  }
+                  else if(result[0].usertype==0){
+                    var idtoload = document.getElementById("listtab");
+                    idtoload.insertAdjacentHTML('beforeend', '<li><a href="userpan.html"><i class="fa fa-life-ring" aria-hidden="true"></i> Changer de Classe</a></li>');
+                  }
+                  })
+            </script>
+            <li><a href="writeArticle.html"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Écrire un article</a></li>
+          </ul>
+        </div>
+        
+    </div> 
+    </div>
+      <div class="col s12 m8 l9">
+          <div id="container_logo">
+              <img src="img/logo-large.png" alt="Logo" />
+          </div>
+      <div>
+ 
+     <div class="col s12 m8 l9" id="main">
+        <table class="tabadmin" style="width: 100%;">
+          <tbody id="listallusers">
+            <tr>
+              <td style="width: 161px;" class="tdadmin">Nom de la classe</td>
+              <td style="width: 142px;" class="tdadmin">Action sur la classe</td>
+            </tr>
+          </tbody>
+        </table>
+        <script>
+          function reloada(){
+            location.reload();
+          }
+          socket.emit('sql-select', 'SELECT * FROM `users` WHERE `id_user` = '+getCookie("uid"), (results) => {
+            socket.emit('sql-select', 'SELECT * FROM `classes` WHERE `id_classe` = '+results[0].class, (results2) => {
+              var nodecntr = document.getElementById("main");
+              nodecntr.insertAdjacentHTML('afterbegin', '<h2 id="center">Liste des classes, Votre classe actuelle : '+results2[0].libelle_classe+'</h2><hr/>');
+            });
+          });
+          
+          socket.emit('sql-select', 'SELECT * FROM `classes` ORDER BY `id_classe` ASC', (results) => {
+            results.forEach(element => {
+              var node = document.getElementById("listallusers");
+              var rank;
+              var buttonsetrole = "";
+              buttonsetrole = "<button name=\"setuser\" type=\"submit\" style=\"background-color: green;\" id=\"joinclass"+element.id_classe+"\">Rejoindre cette classe</button>";
+              node.insertAdjacentHTML('beforeend', '<tr> <td style="width: 161px;" class="tdnom">'+element.libelle_classe+'</td><td style="width: 142px;" class="tdnom">'+ buttonsetrole+'</td>');
+                document.getElementById('joinclass'+element.id_classe).addEventListener("click", function() {
+                  socket.emit('sql-update', 'UPDATE `users` SET `class` = \''+element.id_classe+'\' WHERE `users`.`id_user` = '+getCookie("uid"), (results) => {
+              });
+              reloada();
+              });
+            });
+          })
+        </script>
+      </div>
+  </div>
+  
+ 
+          
+</body>
+</html>

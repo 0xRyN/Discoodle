@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Discooddle</title>
+        <link
+            rel="stylesheet"
+            href="https://codepen.io/tutsplus/pen/WROvdG.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"
+        />
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <style>
+            #video-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, 300px);
+                grid-auto-rows: 300px;
+            }
+            video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body style="background-color: #2c2f33">
+        <div class="content-box"></div>
+        <div id="message"></div>
+        <div class="container">
+            <div class="row-full">
+                <div class="col s12 l19">
+                    <div class="discord-mockup z-depth-3">
+                        <div class="items-panel">
+                            <div class="items">
+                                <div class="item">
+                                    <div id="item">
+                                        <div class="circle-logo">
+                                            <a href="./home.html">
+                                                <img src="./img/logo.png" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="sidebar-panel hide-on-med-and-down"
+                            id="module"
+                        >
+                            <div class="header">Projet de Programmation</div>
+                            <div id="module2"></div>
+                            <div class="user-bas">
+                                <div class="circle-logo">
+                                    <img src="./img/0.png" id="imageid" />
+                                </div>
+                                <h3 id="name-user-bas"></h3>
+                                <script src="../scripts/profile.js"></script>
+                                <script>
+                                    var profile_link;
+                                    async function a() {
+                                        profile_link =
+                                            await getProfilePictureUrl();
+                                        user_name = await getUsername();
+                                        document.getElementById("imageid").src =
+                                            profile_link;
+                                        counter = user_name.length;
+                                        console.log(counter);
+                                        if (counter > 10) {
+                                            user_name =
+                                                user_name.substring(0, 10) +
+                                                "...";
+                                        }
+                                        document.getElementById(
+                                            "name-user-bas"
+                                        ).innerHTML = user_name;
+                                        document.getElementById(
+                                            "hometop"
+                                        ).innerHTML =
+                                            "Discoodog de " + user_name;
+                                    }
+                                    a();
+                                </script>
+                                <button id="button" class="buttonmute">
+                                    <i class="fa fa-phone"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="messages-panel" id="messages-panel">
+                            <div class="test" id="msg-chan">
+                                <!-- WebRTC Integration - Sur clic du bouton-->
+                                <div
+                                    class="messages-group hide-unless-show"
+                                    id="Video"
+                                >
+                                    <div class="header">Vidéo chat</div>
+                                    <div class="messages">
+                                        <div class="main-video">
+                                            <button
+                                                onclick="initVid(),style.display = 'none'"
+                                            >
+                                                Appel Vidéo
+                                            </button>
+                                            <div id="video-grid"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="msg-input" id="msgbar">
+                                <form id="msgform" action="" class="msg-form">
+                                    <input
+                                        id="msg"
+                                        autocomplete="off"
+                                        class="msg-input"
+                                        maxlength="2000"
+                                        placeholder="Écrivez votre message ici !"
+                                    />
+                                </form>
+                                <form
+                                    method="post"
+                                    enctype="multipart/form-data"
+                                    action="/upload"
+                                >
+                                    <label
+                                        for="file-upload"
+                                        class="custom-file-upload"
+                                    >
+                                        +
+                                    </label>
+                                    <input
+                                        id="file-upload"
+                                        type="file"
+                                        name="file"
+                                        accept=".jpg, .jpeg, .png"
+                                        onchange="this.form.submit()"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        id="username"
+                                        value="rayan"
+                                        name="username"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        id="uid"
+                                        value="rayan"
+                                        name="uid"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        id="chanName"
+                                        value="rayan"
+                                        name="chanName"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        id="date"
+                                        value="rayan"
+                                        name="date"
+                                    />
+                                </form>
+                                <button
+                                    onclick="gText()"
+                                    class="custom-text-g"
+                                    type="button"
+                                >
+                                    G
+                                </button>
+                                <button
+                                    onclick="pText()"
+                                    class="custom-text-p"
+                                    type="button"
+                                >
+                                    p
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="result"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="../scripts/groups.js"></script>
+        <script script src="../scripts/index.js"></script>
+        <script>
+            const mySocket = io("/");
+            var button = document.getElementById("button");
+            button.addEventListener("click", function () {
+                if (currentChannel) {
+                    this.innerHTML = '<i class="fa fa-microphone"></i>';
+                    var myRoomId = currentChannel;
+                    /*var a = "SELECT username FROM users WHERE id_user = " + getCookie("uid");
+             var username;
+             mySocket.emit("sql-select", a, (response) => {
+               console.log(response +" this is resposnse")
+                 username = response[0].username;
+                 let roomUrl = "video.html?room=" + myRoomId + "&userId=" + username;
+                 window.open(roomUrl); 
+             })*/
+                    let roomUrl =
+                        "video.html?room=" +
+                        myRoomId +
+                        "&userId=" +
+                        getCookie("uid");
+                    window.open(roomUrl);
+                }
+            });
+        </script>
+    </body>
+</html>
