@@ -1,3 +1,4 @@
+(2021 Edit : Some heavily used npm modules are deprecated. All functions may not work properly. Will need a few hours of fixing.)
 # Discoodle
 
 # Discoo.dog : A discoodle implementation.
